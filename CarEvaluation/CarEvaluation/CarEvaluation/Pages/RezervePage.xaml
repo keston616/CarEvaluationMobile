@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarEvaluation.RezervePage">
+    <ContentPage.Content>
+        <ScrollView Orientation="Vertical" Grid.Row="0" Grid.RowSpan="2">
+            <StackLayout Orientation="Vertical" Grid.Column="0" Margin="20,0,20,0" Grid.ColumnSpan="2">
+                <Frame Grid.Row="0" Padding="0" HeightRequest="55">
+                    <StackLayout VerticalOptions="Center"
+                                 
+                             HorizontalOptions="FillAndExpand"
+                             Orientation="Horizontal">
+                        <Frame Padding="0" HasShadow="False">
+                            <Path Style="{StaticResource nextIconStyle}" 
+                          HorizontalOptions="Start"
+                          Margin="20,0,0,0"
+                                   WidthRequest="20"
+                          Rotation="180"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Label Text="Бронирование" 
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="18"
+                          Margin="0,0,30,0"
+                       Padding="0"
+                           Style="{StaticResource mainTextStyle}"/>
+                    </StackLayout>
+                </Frame>
+                <StackLayout  Spacing="2">
+                    <Label Text="Фамилия"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                    <Entry x:Name="surnameEntry"
+                               Style="{StaticResource entryBaseStyle}"
+                               Placeholder="Введите фамилию"
+                           Keyboard="Chat"
+                               TextChanged="surnameEntry_TextChanged"
+                               MaxLength="17"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                    <Label x:Name="surnameWarning"
+                               Text="Фамилия не указана" 
+                               Style="{StaticResource warningStyle}"/>
+                </StackLayout>
+                <StackLayout  Spacing="2">
+                    <Label Text="Имя"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                    <Entry x:Name="nameEntry"
+                               Style="{StaticResource entryBaseStyle}"
+                               Placeholder="Введите имя"
+                              Keyboard="Text"
+                               TextChanged="nameEntry_TextChanged"
+                               MaxLength="17"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                    <Label x:Name="nameWarning"
+                               Text="Имя не указано" 
+                               Style="{StaticResource warningStyle}"/>
+                </StackLayout>
+               
+                <Label Text="Номер телефона"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                <Entry x:Name="phoneEntry"
+                               Style="{StaticResource entryBaseStyle}"
+                               Placeholder="Введите номер телефона"
+                               TextChanged="phoneEntry_TextChanged"
+                               MaxLength="12"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                <Label x:Name="phoneWarning"
+                               Text="Номер телефонв не указан" 
+                               Style="{StaticResource warningStyle}"/>
+                <Frame x:Name="Save"
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand"
+                    Margin="0,20,0,0">
+                    <Label Text="Сохранить" Style="{StaticResource buttonTextStyle}"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Save_Tapped"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:CarEvaluation"
+             x:Class="CarEvaluation.PersonPage">
+    <ContentPage.Resources>
+        <local:IconPersonConverter x:Key="IconPersonConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" Padding="0">
+                <Label Text="Мой профиль" 
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontSize="18"
+                       Padding="0"
+                       TextColor="Black"
+                       FontFamily="NunitoBold"/>
+            </Frame>
+            <Frame VerticalOptions="Center" 
+                  Margin="0,0,10,0"
+                   Padding="0"
+                   Grid.Row="0"
+                   WidthRequest="30"
+                  HorizontalOptions="End">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="GoExit_Tapped"/>
+                </Frame.GestureRecognizers>
+
+                <Path Fill="Black" Data="M19.8333 9.33333L18.1883 10.9783L20.0317 12.8333H10.5V15.1667H20.0317L18.1883 17.01L19.8333 18.6667L24.5 14L19.8333 9.33333ZM5.83333 5.83333H14V3.5H5.83333C4.55 3.5 3.5 4.55 3.5 5.83333V22.1667C3.5 23.45 4.55 24.5 5.83333 24.5H14V22.1667H5.83333V5.83333"/>
+            </Frame>
+            <Grid Grid.Row="1" Margin="0,-5,0,0"  VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <Frame BackgroundColor="Black" Grid.Row="0" Grid.RowSpan="2"/>
+                <Frame BackgroundColor="White" Margin="10,50,10,10" CornerRadius="40" Grid.Row="1" Grid.RowSpan="4">
+
+                </Frame>
+                <Frame CornerRadius="50" Grid.Row="1" Grid.RowSpan="2"
+                       VerticalOptions="Start" HorizontalOptions="Center"
+                       BackgroundColor="White"
+                       Padding="2"
+                       HeightRequest="101" 
+                       WidthRequest="101">
+                    <Frame HeightRequest="80"
+                           Padding="0"
+                           CornerRadius="50"
+                           HorizontalOptions="FillAndExpand"
+                           WidthRequest="80">
+                        <Image Source="{Binding Photo, Converter={StaticResource IconPersonConverter}}"  HeightRequest="90" WidthRequest="90"/>
+                    </Frame>
+                    
+                </Frame>
+                <StackLayout Orientation="Vertical" Grid.Row="2" Spacing="1" Grid.RowSpan="2">
+                    <Label  Style="{StaticResource labelInfoEmplStyle}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="Surname" />
+                                <Binding Path="Name" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Label Text="{Binding Role.Name}" TextColor="Gray" Style="{StaticResource labelInfoEmplStyle}"/>
+                </StackLayout>
+                <StackLayout Grid.Row="3" VerticalOptions="Start" Spacing="0.1" Margin="10,0,10,0">
+                    <Frame HasShadow="False" >
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Редактировать профиль" Style="{StaticResource labelInfoEmplStyle}" />
+                            <Path Style="{StaticResource nextIconStyle}"/>
+                        </StackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GoEditProfile_Tapped"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Line AnchorX="0" AnchorY="100"/>
+                    <Frame HasShadow="False">
+                        <StackLayout Orientation="Horizontal" >
+                            <Label Text="Сменить пароль" Style="{StaticResource labelInfoEmplStyle}"/>
+                            <Path Style="{StaticResource nextIconStyle}"/>
+                        </StackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GoEditPassword_Tapped"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </StackLayout>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarEvaluation.Pages.CarApprovalPage">
+    <ContentPage.Content>
+        <ScrollView Orientation="Vertical" Grid.Row="0" Grid.RowSpan="2">
+            <StackLayout Orientation="Vertical" Margin="20,0,20,0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Frame Grid.Row="0" Padding="0"
+                       Margin="-20,0,-20,0"
+                       HeightRequest="55">
+                    <StackLayout VerticalOptions="Center"
+                                 
+                             HorizontalOptions="FillAndExpand"
+                             Orientation="Horizontal">
+                        <Frame Padding="0" HasShadow="False">
+                            <Path Style="{StaticResource nextIconStyle}" 
+                          HorizontalOptions="Start"
+                          Margin="20,0,0,0"
+                                   WidthRequest="20"
+                          Rotation="180"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Label Text="Оценка" 
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="18"
+                          Margin="0,0,30,0"
+                       Padding="0"
+                           Style="{StaticResource mainTextStyle}"/>
+                    </StackLayout>
+                </Frame>
+                <StackLayout  Spacing="2">
+                    <Label Text="Цена покупки"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                    <Entry x:Name="buyEntry"
+                               Style="{StaticResource entryBaseStyle}"
+                               Placeholder="Введите цену"
+                           Keyboard="Numeric"
+                               TextChanged="buyEntry_TextChanged"
+                               MaxLength="17"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                    <Label x:Name="buyWarning"
+                               Text="Цена не указана" 
+                               Style="{StaticResource warningStyle}"/>
+                </StackLayout>
+                <StackLayout  Spacing="2">
+                    <Label Text="Цена продажи"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                    <Entry x:Name="sellEntry"
+                               Style="{StaticResource entryBaseStyle}"
+                               Placeholder="Введите цену"
+                           Keyboard="Numeric"
+                               TextChanged="sellEntry_TextChanged"
+                               MaxLength="17"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                    <Label x:Name="sellWarning"
+                               Text="Цена не указана" 
+                               Style="{StaticResource warningStyle}"/>
+                </StackLayout>
+                <Frame x:Name="Save"
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand"
+                    Margin="0,20,0,0">
+                    <Label Text="Сохранить" Style="{StaticResource buttonTextStyle}"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Save_Tapped"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

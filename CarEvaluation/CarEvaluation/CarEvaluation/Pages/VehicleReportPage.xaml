@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local ="clr-namespace:CarEvaluation"
+             x:Class="CarEvaluation.VehicleReportPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="addPathStyle" TargetType="Path">
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="0,0,3,3"/>
+                <Setter Property="Fill" Value="White"/>
+                <Setter Property="Data" Value ="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+            </Style>
+            <Style x:Key="addButtonStyle" TargetType="Frame" BasedOn="{StaticResource buttonBaseStyle}">
+                <Setter Property="HeightRequest" Value="35"/>
+                <Setter Property="WidthRequest" Value="35"/>
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="Margin" Value="0,0,5,10"/>
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Path Style="{StaticResource addPathStyle}"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView x:Name="Scroll"
+                    Orientation="Vertical" 
+                    Padding="0">
+            <StackLayout x:Name="stack" Orientation="Vertical">
+                <Frame Grid.Row="0" Padding="0" HeightRequest="55">
+                    <StackLayout VerticalOptions="Center"
+                             HorizontalOptions="StartAndExpand"
+                             Orientation="Horizontal">
+                        <Frame Padding="0" HasShadow="False">
+                            <Path Style="{StaticResource nextIconStyle}" 
+                          HorizontalOptions="Start"
+                          Margin="20,0,0,0"
+                                   WidthRequest="20"
+                          Rotation="180"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Label Text="Осмотр авто" 
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="18"
+                          Margin="0,0,30,0"
+                       Padding="0"
+                           Style="{StaticResource mainTextStyle}"/>
+                    </StackLayout>
+                </Frame>
+                <StackLayout x:Name="specificationsStack" 
+                             Grid.Row="1" 
+                             Margin="20,30,20,20" 
+                             Padding="0" 
+                             VerticalOptions="FillAndExpand" 
+                             Spacing="10">
+                    <Label Text="Фото автомобиля"
+                           Margin="10,5,0,0"
+                           Style="{DynamicResource infoFieldStyle}"/>
+
+
+                    <StackLayout x:Name="imStack"  Margin="10,0,0,0" Orientation="Vertical" >
+                        <CollectionView x:Name="carImages"
+                          HeightRequest="0"
+                          Margin="-5,0,0,0" 
+                                  ItemsSource="{Binding PhotoCar}"
+                          HorizontalOptions="Fill">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Horizontal"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="3">
+                                        <Frame CornerRadius="7" HeightRequest="78" WidthRequest="110" Padding="0" Margin="0,2,0,2">
+                                            <Image Source="{Binding Picture}"   >
+                                            </Image>
+                                    </Frame>
+                                        <Frame HeightRequest="23"
+                                               WidthRequest="23"
+                                               Margin="0,-3,-2,0"
+                                               CornerRadius="50"
+                                               Padding="0"
+                                               HorizontalOptions="End"
+                                               VerticalOptions="Start"
+                                               BackgroundColor="Gray">
+                                            <Image Source="close.png"/>
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="DeletedImage_Tapped"/>
+                                            </Frame.GestureRecognizers>
+                                        </Frame>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <Frame x:Name="ImageInsert"
+                    HeightRequest="40"
+                           BackgroundColor="LightSlateGray"
+                           CornerRadius="7"
+                               Padding="20,0,20,0"
+                               Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="Start"
+                    Margin="0,10,0,-4">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ImageInsert_Tapped"/>
+                            </Frame.GestureRecognizers> 
+                            <Label Text="Добавить картинку" TextColor="White" VerticalOptions="Center"/>
+                        </Frame>
+                        <Label x:Name="photoWarning"
+                               Text="Не менее 4, и не более 10 фото" 
+                               Margin="0,0,1,0"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="VIN номер"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                        <Entry x:Name="vinPicker"
+                               Style="{StaticResource entryBaseStyle}"
+                               Placeholder="Введите объем двигателя"
+                               TextChanged="vinPicker_TextChanged"
+                               MaxLength="17"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="vinPickerWarning"
+                               Text="VIN номер не указан" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Гос. номер"
+                           Margin="10,5,0,0"
+                               
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <Entry x:Name="gosNumberPicker"
+                                Style="{StaticResource entryBaseStyle}"
+                               TextChanged="gosNumberPicker_TextChanged"
+                               MaxLength="9"
+                               Placeholder="Введите объем двигателя"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="gosnumWarning"
+                               Text="Гос номер не указан"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Марка"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Picker  x:Name="brandPicker"
+                                 TextColor="Black"
+                                     HorizontalOptions="FillAndExpand"
+                                 ItemDisplayBinding="{Binding Name}"
+                                     Style="{StaticResource pickerBaseStyle}"
+                                 SelectedIndexChanged="brandPicker_SelectedIndexChanged"
+                                 Title="Выберите марку авто"
+                                 Margin="6,0,-109,0"/>
+                            <Frame Style="{StaticResource addButtonStyle}" 
+                                   Padding="0"
+                                   HorizontalOptions="EndAndExpand">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="GoAddBrand_Tapped"/>
+                                </Frame.GestureRecognizers>
+                                <Path Style="{StaticResource addPathStyle}"/>
+                            </Frame>
+                        </StackLayout>
+                        <Label x:Name="brandWarning"
+                               Text="Марка не выбрана"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Модель"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Picker x:Name="modelPicker"
+                                     Style="{StaticResource pickerBaseStyle}"
+                                    HorizontalOptions="FillAndExpand"
+                               ItemDisplayBinding="{Binding Name}"
+                                SelectedIndexChanged="modelPicker_SelectedIndexChanged"
+                                Title="Выберите модель авто" 
+                       Margin="6,0,-100,0"/>
+                            <Frame Style="{StaticResource addButtonStyle}" 
+                                   HorizontalOptions="EndAndExpand">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="GoAddModel_Tapped"/>
+                                </Frame.GestureRecognizers>
+                                <Path Style="{StaticResource addPathStyle}"/>
+                            </Frame>
+                        </StackLayout>
+                        <Label x:Name="modelWarning" 
+                               Text="Модель не выбрана"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Поколение"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Picker x:Name="generationPicker"
+                                     Style="{StaticResource pickerBaseStyle}"
+                                    HorizontalOptions="FillAndExpand"
+                               ItemDisplayBinding="{Binding Name}"
+                                SelectedIndexChanged="generationPicker_SelectedIndexChanged"
+                                Title="Выберите поколение авто" 
+                       Margin="6,0,-75,0"/>
+                            <Frame Style="{StaticResource addButtonStyle}" 
+                                   HorizontalOptions="EndAndExpand">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="GoAddGeneration_Tapped"/>
+                                </Frame.GestureRecognizers>
+                                <Path Style="{StaticResource addPathStyle}"/>
+                            </Frame>
+                        </StackLayout>
+                        <Label x:Name="generationWarning" 
+                               Text="Поколоение не выбрано" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Год выпуска"
+                           Margin="10,5,0,0"
+                               
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <Entry x:Name="yearEntry"
+                               TextChanged="yearEntry_TextChanged"
+                               MaxLength="4"
+                               Keyboard="Numeric"
+                               Placeholder="Введите объем двигателя"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="yearWarning"
+                               Text="Год выпуска не указан"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Пробег(км.)"
+                           Margin="10,5,0,0"
+                               
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <Entry x:Name="mileageEntry"
+                                Style="{StaticResource entryBaseStyle}"
+                               TextChanged="mileageEntry_TextChanged"
+                               Keyboard="Numeric"
+                               Placeholder="Введите пробег автомобиля"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="mileageWarning"
+                               Text="Пробег не указан" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Тип трансмиссии"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                        <Picker x:Name="transmissPicker"
+                           Style="{StaticResource pickerBaseStyle}"
+                                ItemDisplayBinding="{Binding Name}"
+                                SelectedIndexChanged="transmissPicker_SelectedIndexChanged"
+                                Title="Выберите тип трансмиссии" 
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="transmissWarning"
+                               Text="Тип трансмиссии не выбрана"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Тип двигателя"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <Picker x:Name="enginePicker"
+                           Style="{StaticResource pickerBaseStyle}"
+                                ItemDisplayBinding="{Binding Name}"
+                                SelectedIndexChanged="enginePicker_SelectedIndexChanged"
+                                Title="Выберите тип двигателя" 
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="engineWarning"
+                               Text="Тип трансмиссии не выбрана"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Объем двигателя"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+
+                        <Entry x:Name="engineCapacityPicker"
+                                Style="{StaticResource entryBaseStyle}"
+                               Placeholder="Введите объем двигателя"
+                               Keyboard="Numeric"
+                               MaxLength="3"
+                               TextChanged="engineCapacityPicker_TextChanged"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="engineCapacityWarning"
+                               Text="Объем двигателя не указан"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Мощность двигателя"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+
+                        <Entry x:Name="powerEntry"
+                                Style="{StaticResource entryBaseStyle}"
+                               Placeholder="Введите объем двигателя"
+                               Keyboard="Numeric"
+                               TextChanged="powerEntry_TextChanged"
+                       TextColor="Black"
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="powerWarning" 
+                               Text="Мощноcть двигателя не указана"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Цвет"
+                               Margin="10,5,0,0"
+                               Style="{DynamicResource infoFieldStyle}"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Picker x:Name="colorPicker"
+                                         Style="{StaticResource pickerBaseStyle}"
+                                    HorizontalOptions="FillAndExpand"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedIndexChanged="colorPicker_SelectedIndexChanged"
+                                    Title="Выберите цвет" 
+                                    Margin="6,0,-160,0"/>
+                            <Frame Style="{StaticResource addButtonStyle}" 
+                                   HorizontalOptions="EndAndExpand">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="GoAddColor_Tapped"/>
+                                </Frame.GestureRecognizers>
+                                <Path Style="{StaticResource addPathStyle}"/>
+                            </Frame>
+                        </StackLayout>
+                        <Label x:Name="colorWarning" 
+                               Text="Цвет не выбрана" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Количество хозяев"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <Entry x:Name="countOwnerPicker"
+                               Placeholder="Введите кол-во владельцев"
+                       TextColor="Black"
+                                Style="{StaticResource entryBaseStyle}"
+                               Keyboard="Numeric"
+                               TextChanged="countOwnerPicker_TextChanged"
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="countOwnerWarning"
+                               Text="Кол-во владельцев не указано"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Тип кузова"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                        <Picker x:Name="bodyPicker"
+                            Style="{StaticResource pickerBaseStyle}"
+                                ItemDisplayBinding="{Binding Name}"
+                                SelectedIndexChanged="bodyPicker_SelectedIndexChanged"
+                                Title="Выберите тип кузова" 
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="bodyWarning"
+                               Text="Тип кузова не выбран" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Комплектация"
+                           Margin="10,5,0,0"
+                        Style="{DynamicResource infoFieldStyle}"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Picker x:Name="equipmentPicker"
+                           Style="{StaticResource pickerBaseStyle}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    HorizontalOptions="FillAndExpand"
+                                SelectedIndexChanged="equipmentPicker_SelectedIndexChanged"
+                                Title="Выберите комплектацию" 
+                       Margin="6,0,-70,0"/>
+                            <Frame Style="{StaticResource addButtonStyle}" 
+                                   HorizontalOptions="EndAndExpand">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="GoAddEquipment_Tapped"/>
+                                </Frame.GestureRecognizers>
+                                <Path Style="{StaticResource addPathStyle}"/>
+                            </Frame>
+                        </StackLayout>
+                        <Label x:Name="equipmentWarning" 
+                               Text="Комплектация не выбрана" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Тип топливной системы"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <Picker x:Name="fuelPicker"
+                            Style="{StaticResource pickerBaseStyle}"
+                                ItemDisplayBinding="{Binding Name}"
+                                SelectedIndexChanged="fuelPicker_SelectedIndexChanged"
+                                Title="Выберите соответствующий вариант" 
+                       Margin="6,0,6,0">
+                        </Picker>
+                        <Label x:Name="fuelWarning"
+                               Text="Тип топливной системы не выбран" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Привод"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <Picker x:Name="drivePicker"
+                                ItemDisplayBinding="{Binding Name}"
+                            Style="{StaticResource pickerBaseStyle}"
+                                SelectedIndexChanged="drivePicker_SelectedIndexChanged"
+                                Title="Выберите привод" 
+                       Margin="6,0,6,0">
+                        </Picker>
+                        <Label x:Name="driveWarning"
+                               Text="Тип привода не выбран" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Оригинальное ПТС"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <Picker x:Name="ptcPicker"
+                           Style="{StaticResource pickerBaseStyle}"
+                                SelectedIndexChanged="ptcPicker_SelectedIndexChanged"
+                                Title="Выберите соответствующий вариант" 
+                       Margin="6,0,6,0">
+                            <Picker.Items>
+                                <x:String>Да</x:String>
+                                <x:String>Нет</x:String>
+                            </Picker.Items>
+                        </Picker>
+                        <Label x:Name="ptcWarning" 
+                               Text="Тип ПТС не выбран"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Компрессия двигателя"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <Entry x:Name="compressionPicker"
+                               Placeholder="Введите космпрессию двигателя"
+                       TextColor="Black"
+                                Style="{StaticResource entryBaseStyle}"
+                               TextChanged="compressionPicker_TextChanged"
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="compressionWarning" 
+                               Text="Компрессия не указана" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Юр. ограничения"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <StackLayout Orientation="Horizontal" Margin="5,0,0,0">
+                            <CheckBox x:Name="juriidicCheck" Color="#2D4B7F"/>
+                            <Label Text="Отсутсвуют"  FontFamily ="NunitoRegular" TextColor="Black" VerticalOptions="Center" FontSize="18"/>
+                        </StackLayout>
+                        <Label x:Name="urOgranWarning" 
+                               Text="Поле не выбрано"
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Количество ремонтированных кузовных элементов"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <StackLayout Orientation="Horizontal" Margin="10,0,0,0">
+                            <Frame Style="{StaticResource addButtonStyle}" 
+                                   HorizontalOptions="Start">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="MinusCountRepairDetail_Tapped"/>
+                                </Frame.GestureRecognizers>
+                                <Path Fill="White" Data="M19 13H5v-2h14v2z" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,4,10"/>
+                            </Frame>
+                            <Entry x:Name="countRepairPicker"
+                               Keyboard="Numeric"
+                                   HorizontalOptions="FillAndExpand"
+                               Text="0"
+                                   IsEnabled="False"
+                                   HorizontalTextAlignment="Center"
+                               TextChanged="countRepairPicker_TextChanged"
+                       TextColor="Black"
+                       Margin="0,0,2,0"/>
+                            <Frame Style="{StaticResource addButtonStyle}" 
+                                   HorizontalOptions="End">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AddCountRepairDetail_Tapped"/>
+                                </Frame.GestureRecognizers>
+                                <Path Style="{StaticResource addPathStyle}"/>
+                            </Frame>
+                        </StackLayout>
+                        <Label x:Name="countRepairWarning"
+                               Text="Укажите кол-во ремонтированных кузовных элементов" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout x:Name="stacKH"
+                                 Margin="10,0,0,0" 
+                                 Spacing="2"
+                                 Orientation="Vertical" 
+                                 VerticalOptions="FillAndExpand">
+                        <Label x:Name="repairDetailWarning" 
+                               Text="Заполните информацию о ремонтированных деталях" 
+                               Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                    <StackLayout  Spacing="2">
+                        <Label Text="Общее состояние автомобиля"
+                           Margin="10,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                        <Editor x:Name="noteEntry"
+                               Placeholder="Описание"
+                       TextColor="Black"
+                                FontSize="19"
+                       Margin="6,0,6,0"/>
+                    </StackLayout>
+                    <Frame x:Name="Save"
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                           VerticalOptions="EndAndExpand"
+                    Margin="0,20,0,100">
+                        <Label Text="Сохранить" Style="{StaticResource buttonTextStyle}"/>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GoSave_Tapped"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

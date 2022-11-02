@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CarEvaluation"
+             x:Class="CarEvaluation.Authorization">
+
+    <Grid Background="White">
+        <StackLayout Padding="40,0,40,0" VerticalOptions="CenterAndExpand" Spacing="20">
+            <Label Text="Авторизация"  Style="{DynamicResource labelBaseStyle}"/>
+            <Frame x:Name="frameLogin"
+            Padding="2"
+                Margin="0,20,0,0"
+            HasShadow="False"
+            BorderColor="LightGray"
+            CornerRadius="15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Path x:Name="loginIcon" Fill="LightGray" VerticalOptions="Center" HorizontalOptions="Center" Margin="8,1,0,0"
+                          Data="M12.5 0C5.6 0 0 5.6 0 12.5C0 19.4 5.6 25 12.5 25C19.4 25 25 19.4 25 12.5C25 5.6 19.4 0 12.5 0ZM12.5 3.75C14.575 3.75 16.25 5.425 16.25 7.5C16.25 9.575 14.575 11.25 12.5 11.25C10.425 11.25 8.75 9.575 8.75 7.5C8.75 5.425 10.425 3.75 12.5 3.75ZM12.5 21.5C9.375 21.5 6.6125 19.9 5 17.475C5.0375 14.9875 10 13.625 12.5 13.625C14.9875 13.625 19.9625 14.9875 20 17.475C18.3875 19.9 15.625 21.5 12.5 21.5Z"/>
+                    <local:RoundedEntry x:Name="loginEntry"
+                        Grid.Column="1"
+                                        Placeholder="Номер телефона"
+                                        Margin="-15,0,0,0" 
+                                        Keyboard="Telephone"
+                                        Focused="login_Focused" 
+                                        Unfocused="login_Unfocused"
+                                        HorizontalOptions="FillAndExpand"/>
+                </Grid>
+            </Frame>
+            <Label x:Name="loginWarning" Text="Пользователь не найден" Style="{StaticResource warningStyle}"/>
+            <Frame x:Name="framePassword"
+            Padding="2"
+            HasShadow="False"
+            BorderColor="LightGray"
+            CornerRadius="15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Path x:Name="passwordIcon" Fill="LightGray" VerticalOptions="Center" HorizontalOptions="Center" Margin="8,0.5,0,0"
+                          Data="M18.7503 8.33334H17.7087V6.25C17.7087 3.375 15.3753 1.04167 12.5003 1.04167C9.62532 1.04167 7.29199 3.375 7.29199 6.25V8.33334H6.25033C5.10449 8.33334 4.16699 9.27084 4.16699 10.4167V20.8333C4.16699 21.9792 5.10449 22.9167 6.25033 22.9167H18.7503C19.8962 22.9167 20.8337 21.9792 20.8337 20.8333V10.4167C20.8337 9.27084 19.8962 8.33334 18.7503 8.33334ZM9.37532 6.25C9.37532 4.52083 10.7712 3.125 12.5003 3.125C14.2295 3.125 15.6253 4.52083 15.6253 6.25V8.33334H9.37532V6.25ZM18.7503 20.8333H6.25033V10.4167H18.7503V20.8333ZM12.5003 17.7083C13.6462 17.7083 14.5837 16.7708 14.5837 15.625C14.5837 14.4792 13.6462 13.5417 12.5003 13.5417C11.3545 13.5417 10.417 14.4792 10.417 15.625C10.417 16.7708 11.3545 17.7083 12.5003 17.7083Z"/>
+                    <local:RoundedEntry x:Name="passwordEntry"
+                        Grid.Column="1"
+                                        Focused="passwordEntry_Focused"
+                                        Unfocused="passwordEntry_Unfocused"
+                                        Placeholder="Пароль"
+                                        Margin="-15,0,0,0" 
+                                        IsPassword="True"
+                                        HorizontalOptions="FillAndExpand"/>
+                </Grid>
+            </Frame>
+            <Label x:Name="passWarning" Text="Пароль неверный" Style="{StaticResource warningStyle}"/>
+            <Frame  Style="{StaticResource buttonBaseStyle}" 
+                    Margin="0,20,0,0"
+                    Padding="0">
+                <Label Text="Войти" Style="{DynamicResource buttonTextStyle}"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="GoAuthorization_Tapped"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

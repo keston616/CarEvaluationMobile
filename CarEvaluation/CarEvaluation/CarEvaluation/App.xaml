@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CarEvaluation"
+             x:Class="CarEvaluation.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="BluBiolet">#2a29e7</Color>
+            <Color x:Key="BluGr">#2D4B7F</Color>
+            <Style x:Key="baseStyle" TargetType="Grid" >
+                <Setter Property="Background" Value="White"/>
+            </Style>
+            <Style x:Key="buttonBaseStyle" TargetType="Frame" >
+                <Setter Property="Background" Value="#2D4B7F"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="CornerRadius" Value="25"/>
+            </Style>
+            <Style x:Key="buttonTextStyle" TargetType="Label" >
+                <Setter Property="FontFamily" Value="NunitoBold"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="17"/>
+            </Style>
+            <Style x:Key="mainTextStyle" TargetType="Label" >
+                <Setter Property="FontFamily" Value="NunitoBold"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="18"/>
+            </Style>
+            <Style x:Key="infoCarStyle" TargetType="Label" >
+                <Setter Property="FontFamily" Value="NunitoRegular"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+            <Style x:Key="infoFieldStyle" TargetType="Label" >
+                <Setter Property="FontFamily" Value="NunitoRegular"/>
+                <Setter Property="TextColor" Value="Gray"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+            <Style x:Key="labelBaseStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="NunitoExtraBold"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontSize" Value="37"/>
+            </Style>
+            <Style x:Key="labelInfoEmplStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="NunitoRegular"/>
+                <Setter Property="TextColor" Value="#181513"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+            <Style x:Key="nextIconStyle" TargetType="Path">
+                <Setter Property="Data" Value="M6.22998 20.23L7.99998 22L18 12L7.99998 2L6.22998 3.77L14.46 12L6.22998 20.23Z"/>
+                <Setter Property="Fill" Value="#181513"/>
+                <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
+            </Style>
+
+            <Style x:Key="entryBaseStyle" TargetType="Entry">
+                <Setter Property="FontFamily" Value="NunitoRegular"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="18"/>
+            </Style>
+            <Style x:Key="pickerBaseStyle" TargetType="Picker">
+                <Setter Property="FontFamily" Value="NunitoRegular"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="18"/>
+            </Style>
+            <Style x:Key="warningStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Red"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="IsVisible" Value="False"/>
+                <Setter Property="Margin" Value="10,-10,0,0"/>
+                <Setter Property="FontFamily" Value="NunutoMedium"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:CarEvaluation"
+             x:Class="CarEvaluation.CarInspector">
+    <ContentPage.Content>
+        <Grid HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+            <ScrollView Orientation="Vertical" Grid.Row="0" Grid.RowSpan="2">
+                <StackLayout Orientation="Vertical" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Frame Grid.Row="0" Padding="0" HeightRequest="60">
+                        <Label x:Name="titleApp" Text="Установка цены" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center"
+                       FontSize="18"
+                       Padding="0"
+                       TextColor="Black"
+                       FontFamily="NunitoBold"/>
+                    </Frame>
+                    <Frame x:Name="searchFrame"
+                            Padding="2"
+                            Margin="20,10,20,0"
+                           HasShadow="False"
+                           
+                            BorderColor="LightGray"
+                            CornerRadius="10">
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Path x:Name="searchIcon" Fill="LightGray" VerticalOptions="Center" HorizontalOptions="Center" Margin="8,1,0,0"
+                          Data="M19.9 20.975L13.325 14.4C12.825 14.8333 12.2417 15.1708 11.575 15.4125C10.9083 15.6542 10.2 15.775 9.45 15.775C7.65 15.775 6.125 15.15 4.875 13.9C3.625 12.65 3 11.1417 3 9.37501C3 7.60834 3.625 6.10001 4.875 4.85001C6.125 3.60001 7.64167 2.97501 9.425 2.97501C11.1917 2.97501 12.6958 3.60001 13.9375 4.85001C15.1792 6.10001 15.8 7.60834 15.8 9.37501C15.8 10.0917 15.6833 10.7833 15.45 11.45C15.2167 12.1167 14.8667 12.7417 14.4 13.325L21 19.875L19.9 20.975ZM9.425 14.275C10.775 14.275 11.925 13.7958 12.875 12.8375C13.825 11.8792 14.3 10.725 14.3 9.37501C14.3 8.02501 13.825 6.87084 12.875 5.91251C11.925 4.95417 10.775 4.47501 9.425 4.47501C8.05833 4.47501 6.89583 4.95417 5.9375 5.91251C4.97917 6.87084 4.5 8.02501 4.5 9.37501C4.5 10.725 4.97917 11.8792 5.9375 12.8375C6.89583 13.7958 8.05833 14.275 9.425 14.275Z"/>
+                            <local:RoundedEntry x:Name="searchEntry"
+                        Grid.Column="1"
+                                        Placeholder="Поиск по госномеру"
+                                        Margin="-15,0,0,0" 
+                                                FontFamily="NunitoRegular"
+                                        Focused="search_Focused"
+                                                TextChanged="searchEntry_TextChanged"
+                                        Unfocused="search_Unfocused"
+                                        HorizontalOptions="FillAndExpand"/>
+                        </Grid>
+                    </Frame>
+                    <RefreshView x:Name="refreshView">
+                        <StackLayout>
+                            <CollectionView x:Name="listCar"  
+                                        RemainingItemsThreshold="4"
+                                         RemainingItemsThresholdReached="listCar_RemainingItemsThresholdReached">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <Grid HeightRequest="110" Margin="20,0,20,20" >
+                                            <Frame  HeightRequest="80"
+                                                    BackgroundColor="White"
+                                                    CornerRadius="10" 
+                                                    Margin="20,3,20,3"
+                                                    HorizontalOptions="FillAndExpand">
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="GoInfoCar_Tapped"/>
+                                                </Frame.GestureRecognizers>
+                                                <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition  Width="80"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Source="{Binding FirstImage}" HorizontalOptions="FillAndExpand" Grid.Column="0"/>
+                                                    <StackLayout Orientation="Vertical" VerticalOptions="Center" Margin="10,-5,0,0" Grid.Column="1">
+                                                        <Label Style="{StaticResource infoCarStyle}">
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} {1} {2}">
+                                                                    <Binding Path="Model.Brand.Name"/>
+                                                                    <Binding Path="Model.Name"/>
+                                                                    <Binding Path="Generation.Name"/>
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
+                                                        <Label  Text="{Binding DateBuy, StringFormat='{}Дата осмотра: {0:dd.MM.yyyy}'}" Style="{StaticResource infoCarStyle}"/>
+                                                        <Label Text="{Binding Status.Name}" TextColor="Gray" Style="{StaticResource infoCarStyle}"/>
+                                                        <Label Text="{Binding GosNumber}" TextColor="Gray" Style="{StaticResource infoCarStyle}"/>
+                                                    </StackLayout>
+                                                </Grid>
+
+                                            </Frame>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                            <CollectionView x:Name="listCarReserv"  IsVisible="False"  
+                                            RemainingItemsThreshold="4"
+                                         RemainingItemsThresholdReached="listCar_RemainingItemsThresholdReached" >
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <Grid HeightRequest="110" Margin="20,0,20,20" >
+                                            <Frame  HeightRequest="80"
+                            BackgroundColor="White"
+                            CornerRadius="10" 
+                            Margin="20,3,20,3"
+                            HorizontalOptions="FillAndExpand">
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="GoInfoCar_Tapped"/>
+                                                </Frame.GestureRecognizers>
+                                                <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition  Width="80"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Source="{Binding FirstImage}" HorizontalOptions="FillAndExpand" Grid.Column="0"/>
+                                                    <StackLayout Orientation="Vertical" Margin="10,0,0,0" Grid.Column="1">
+                                                        <Label Style="{StaticResource infoCarStyle}">
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} {1} {2}">
+                                                                    <Binding Path="Model.Brand.Name"/>
+                                                                    <Binding Path="Model.Name"/>
+                                                                    <Binding Path="Generation.Name"/>
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
+                                                        <Label  Text="{Binding BookingDate, StringFormat='{}Забронирован до: {0:dd.MM.yyyy HH\\:mm}'}" Style="{StaticResource infoCarStyle}"/>
+                                                        <Label Text="{Binding GosNumber}" TextColor="Gray" Style="{StaticResource infoCarStyle}"/>
+                                                    </StackLayout>
+                                                </Grid>
+
+                                            </Frame>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                    </RefreshView>
+                </StackLayout>
+            </ScrollView>
+            <Frame x:Name="AddButton"
+                CornerRadius="50" 
+                  HeightRequest="55"
+                  WidthRequest="55"
+                   IsVisible="False"
+                   Margin="0,0,7,7"
+                   VerticalOptions="Start"
+                   BackgroundColor="{StaticResource BluGr}"
+                   HorizontalOptions="End"
+                   Padding="0"
+                   Grid.Row="1">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="InsertCarInspector_Tapped"/>
+                </Frame.GestureRecognizers>
+                <Path Fill="White" 
+                      VerticalOptions="Center"
+                      Margin="0,0,4,4"
+                      HorizontalOptions="Center" Data="M23.75 16.25H16.25V23.75H13.75V16.25H6.25V13.75H13.75V6.25H16.25V13.75H23.75V16.25Z"/>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

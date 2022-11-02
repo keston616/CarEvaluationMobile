@@ -1,0 +1,566 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local ="clr-namespace:CarEvaluation"
+             
+             x:Class="CarEvaluation.InfoCar">
+    <ContentPage.Resources>
+        <local:PTCConverter x:Key="PTCConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView x:Name="Scroll" Orientation="Vertical" Padding="0">
+            <StackLayout x:Name="stack" Orientation="Vertical">
+
+
+                <Frame Grid.Row="0" Padding="0" HeightRequest="55">
+                    <Grid VerticalOptions="Center"
+                                 
+                             HorizontalOptions="FillAndExpand">
+                        <Frame Padding="0"
+                               HasShadow="False"
+                               HorizontalOptions="Start"
+                               Margin="10,0,0,0"
+                               WidthRequest="40">
+                            <Path Style="{StaticResource nextIconStyle}" 
+                          HorizontalOptions="Center"
+                                   
+                          Rotation="180"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Label Text="Отчёт об авто" 
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="18"
+                       Padding="0"
+                           Style="{StaticResource mainTextStyle}"/>
+                    </Grid>
+                </Frame>
+                <StackLayout Margin="30,20,30,0">
+                    <Label 
+                           FontSize="22" 
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource mainTextStyle}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="{}{0} {1} {2}">
+                                <Binding Path="Model.Brand.Name"/>
+                                <Binding Path="Model.Name"/>
+                                <Binding Path="Generation.Name"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Label x:Name="reservLabel"
+                        Text="{Binding BookingDate, StringFormat='{}Забронирован до: {0:dd.MM.yy HH\\:mm}'}" 
+                           FontSize="15" 
+                               Grid.Row="1"
+                           IsVisible="False"
+                               Grid.Column="1"
+                           HorizontalOptions="Start"
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                    <Frame 
+                        BackgroundColor="LightGray"
+                           Padding="0" 
+                           CornerRadius="5"
+                           HasShadow="False"
+                           Margin="0,10,0,0"
+                           HeightRequest="200">
+                        <Image x:Name="mainImage" Source="{Binding FirstImage}" />
+                    </Frame>
+                    <CollectionView x:Name="carImages"
+                          HeightRequest="100"
+                          Margin="0" 
+                                  ItemsSource="{Binding PhotoObserCollection}"
+                          HorizontalOptions="Fill">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image Source="{Binding Picture}" HeightRequest="78"  >
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Grid WidthRequest="10" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Label Text="Общая информация" 
+                           FontSize="20" 
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource mainTextStyle}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Text="Статус" 
+                           FontSize="15" 
+                               HorizontalOptions="Start"
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                        <Label Text="{Binding Status.Name}" 
+                           FontSize="15" 
+                                 HorizontalOptions="Start"
+                             Grid.Column="1"  
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                        <Label Text="Дата осмотра" 
+                           FontSize="15" 
+                               Grid.Row="1"
+                           HorizontalOptions = "Start"
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                        <Label Text="{Binding DateBuy, StringFormat='{}{0:dd.MM.yy}'}" 
+                           FontSize="15" 
+                               Grid.Row="1"
+                               Grid.Column="1"
+                           HorizontalOptions="Start"
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                        <Label Text="Цена выкупа" 
+                           FontSize="15" 
+                                Grid.Row="2"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                        <Label Text="{Binding IsBuyPrice}" 
+                           FontSize="15" 
+                                Grid.Row="2"
+                               Grid.Column="1"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                        <Label Text="Цена" 
+                           FontSize="15" 
+                                Grid.Row="3"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                        <Label Text="{Binding IsSellPrice}" 
+                           FontSize="15" 
+                               HorizontalOptions="Start"
+                                Grid.Row="3"
+                               Grid.Column="1"
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                        <Label Text="Осмотр провёл" 
+                                Grid.Row="4"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                        <Label  HorizontalOptions="Start"
+                                Grid.Row="4"
+                               Grid.Column="1"
+                           Style="{StaticResource labelInfoEmplStyle}">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="user.Surname"/>
+                                    <Binding Path="user.Name"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <Label   x:Name="analitLabelFirst"
+                            Text="Оценку провёл" 
+                                Grid.Row="5"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                        <Label  x:Name="analitLabelSecond"
+                            HorizontalOptions="Start"
+                                Grid.Row="5"
+                               Grid.Column="1"
+                           Style="{StaticResource labelInfoEmplStyle}">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="user1.Surname"/>
+                                    <Binding Path="user1.Name"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                    </Grid>
+
+                    <Label Text="Характеристики" 
+                           FontSize="20" 
+                           Margin="0,10,0,0"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource mainTextStyle}"/>
+                    <Grid Margin="0,10,0,0">
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <Style x:Key="Info" TargetType="Label">
+                                    <Setter Property="TextColor" Value="Gray"/>
+                                    <Setter Property="FontSize" Value="15"/>
+                                    <Setter Property="FontFamily" Value="NunitoRegular"/>
+                                </Style>
+                                <Style x:Key="InfoFiled" TargetType="Label" BasedOn="{StaticResource Info}">
+                                    <Setter Property="TextColor" Value="Black"/>
+                                </Style>
+                            </ResourceDictionary>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Text="Год выпуска"
+                               Style="{DynamicResource Info}"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding YearOfRealease}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Column="1"/>
+                        <Label Text="Пробег"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="1"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding Mileage, StringFormat='{}{0} км'}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="1"
+                               Grid.Column="1"/>
+                        <Label Text="Кузов"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="2"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding Body.Name}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="2"
+                               Grid.Column="1"/>
+                        <Label Text="Цвет"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="3"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding Color.Name}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="3"
+                               Grid.Column="1"/>
+                        <Label Text="Двигатель"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="4"
+                               Grid.Column="0"/>
+                        <Label 
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="4"
+                               Grid.Column="1">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0} л/{1} л.с./{2}/{3}">
+                                    <Binding Path="EngineCapacity"/>
+                                    <Binding Path="PowerCapacity"/>
+                                    <Binding Path="FuelType.Name"/>
+                                    <Binding Path="TypeEngine.Name"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <Label Text="КПП"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="5"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding TypeTransmission.Name}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="5"
+                               Grid.Column="1"/>
+                        <Label Text="Привод"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="6"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding Drive.Name}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="6"
+                               Grid.Column="1"/>
+
+                        <Label Text="Владельцы"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="7"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding CountOwner}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="7"
+                               Grid.Column="1"/>
+                        <Label Text="Комплектация"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="8"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding Equipment.Name}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="8"
+                               Grid.Column="1"/>
+                        <Label Text="ПТС"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="9"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding IsOriginalPTC, Converter= {StaticResource PTCConverter}}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="9"
+                               Grid.Column="1"/>
+                        <Label Text="VIN"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="10"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding VIN}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="10"
+                               Grid.Column="1"/>
+                        <Label Text="Госномер"
+                               Style="{DynamicResource Info}"
+                               Grid.Row="11"
+                               Grid.Column="0"/>
+                        <Label Text="{Binding GosNumber}"
+                               Style="{DynamicResource InfoFiled}"
+                               Grid.Row="11"
+                               Grid.Column="1"/>
+                    </Grid>
+                    <Label Text="Юридические ограничения" 
+                           FontSize="20" 
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource mainTextStyle}"/>
+                    <StackLayout Orientation="Horizontal">
+
+                        <BoxView x:Name="boxJuridic"
+                            BackgroundColor="Green" 
+                                 VerticalOptions="Start" 
+                                 HorizontalOptions="Start" 
+                                 HeightRequest="8"
+                                 Margin="0,7,0,0"
+                                 WidthRequest="8"
+                                 CornerRadius="50"/>
+                        <Label x:Name="labelJuridic" Text="Отсутствуют" 
+                           FontSize="15" 
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                    </StackLayout>
+                    <Label Text="Ремонты по ЛКП" 
+                           FontSize="20" 
+                               Margin="0,10,0,0"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource mainTextStyle}"/>
+                    <StackLayout x:Name="stackRepair">
+
+                    </StackLayout>
+                    <Label Text="Компрессия мотора" 
+                           FontSize="20" 
+                              Margin="0,10,0,0"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource mainTextStyle}"/>
+                    <Label Text="{Binding CompressionMotor, StringFormat = '{}Результат замера: {0}'}" 
+                           FontSize="15" 
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                    <Label Text="Техническое состояние автомобиля" 
+                           FontSize="20" 
+                           VerticalOptions="Start"
+                              Margin="0,10,0,0"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource mainTextStyle}"/>
+                    <Label Text="{Binding DescriptionIsDefault, StringFormat='{}Описание: {0}'}" 
+                           FontSize="15" 
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                    <StackLayout x:Name="infoBooking"
+                                 IsVisible="False"
+                                 Orientation="Vertical">
+                        <Label Text="Информация о брони" 
+                           FontSize="20" 
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource mainTextStyle}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Text="Клиент" 
+                                Grid.Row="0"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                            <Label  HorizontalOptions="Start"
+                                Grid.Row="0"
+                               Grid.Column="1"
+                           Style="{StaticResource labelInfoEmplStyle}">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="BookingLast.SurnameClient"/>
+                                        <Binding Path="BookingLast.NameClient"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+
+                            <Label Text="Дата начала" 
+                                Grid.Row="1"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                            <Label  HorizontalOptions="Start"
+                                Grid.Row="1"
+                               Grid.Column="1"
+                                        Text="{Binding BookingLast.Date, StringFormat='{}{0:dd.MM.yy HH\\:mm}'}"
+                           Style="{StaticResource labelInfoEmplStyle}">
+                            </Label>
+                            <Label Text="Дата конец" 
+                                Grid.Row="2"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                            <Label  HorizontalOptions="Start"
+                                Grid.Row="2"
+                               Grid.Column="1"
+                                        Text="{Binding BookingDate, StringFormat='{}{0:dd.MM.yy HH\\:mm}'}"
+                           Style="{StaticResource labelInfoEmplStyle}">
+                            </Label>
+                            <Label Text="Номер телефона" 
+                                Grid.Row="3"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                            <Label  HorizontalOptions="Start"
+                                Grid.Row="3"
+                               Grid.Column="1"
+                                        Text="{Binding BookingLast.Phone}"
+                           Style="{StaticResource labelInfoEmplStyle}">
+                            </Label>
+                            <Label Text="Менеджер" 
+                                Grid.Row="4"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" 
+                           Style="{StaticResource labelInfoEmplStyle}"/>
+                            <Label  HorizontalOptions="Start"
+                                Grid.Row="4"
+                               Grid.Column="1"
+                           Style="{StaticResource labelInfoEmplStyle}">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="BookingLast.User.Surname"/>
+                                        <Binding Path="BookingLast.User.Name"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+                <Grid Margin="20,20,20,50">
+                    <StackLayout x:Name="addPrice"   IsVisible="False" Orientation="Vertical">
+                        <Frame    
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                               BackgroundColor="Green"
+                    VerticalOptions="EndAndExpand">
+                            <Label x:Name="doneButton" Text="Одобрить" Style="{StaticResource buttonTextStyle}"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Done_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame 
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                            BackgroundColor="Red"
+                    VerticalOptions="EndAndExpand">
+                            <Label Text="Отклонить" Style="{StaticResource buttonTextStyle}"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Cancle_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </StackLayout>
+                    <StackLayout x:Name="edit" IsVisible="False" Orientation="Vertical">
+                        <Frame 
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand">
+                            <Label Text="Редактировать" Style="{StaticResource buttonTextStyle}"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoEdit_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame 
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand">
+                            <Label Text="Удалить" Style="{StaticResource buttonTextStyle}"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Deleted_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </StackLayout>
+                   
+                    <StackLayout x:Name="managStack" IsVisible="false" Margin="0,0,0,0" Orientation="Vertical">
+
+     
+
+                        <Frame x:Name="callPhone"
+                    Style="{StaticResource buttonBaseStyle}"
+                               IsVisible="False"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand">
+                            <Label Text="Позвонить" Style="{StaticResource buttonTextStyle}"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="CallPhone_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Grid>
+                            <Frame x:Name="reserve"
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                           IsVisible="False"
+                    VerticalOptions="EndAndExpand">
+                                <Label Text="Забронировать" Style="{StaticResource buttonTextStyle}"/>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Reserve_Tapped"/>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+
+                            <Frame x:Name="reserveClose"
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                           IsVisible="False"
+                    VerticalOptions="EndAndExpand">
+                                <Label Text="Отменить бронь" Style="{StaticResource buttonTextStyle}"/>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="CloseRezer_Tapped"/>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </Grid>
+                        <Frame x:Name="sellClick"
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand">
+                            <Label Text="Продан" Style="{StaticResource buttonTextStyle}"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Sell_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </StackLayout>
+                </Grid>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

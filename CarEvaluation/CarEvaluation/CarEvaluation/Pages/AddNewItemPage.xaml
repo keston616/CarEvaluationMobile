@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarEvaluation.AddNewItemPage">
+    <ContentPage.Content>
+        <Grid x:Name="stack" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Frame Padding="0" HeightRequest="55" Grid.Row="0">
+                <StackLayout VerticalOptions="Center"                
+                             HorizontalOptions="FillAndExpand"
+                             Orientation="Horizontal">
+                    <Frame Padding="0" HasShadow="False">
+                        <Path Style="{StaticResource nextIconStyle}" 
+                          HorizontalOptions="Start"
+                          Margin="20,0,0,0"
+                                   WidthRequest="20"
+                          Rotation="180"/>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Label x:Name="AppBar"
+                        Text="Осмотр авто" 
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="18"
+                          Margin="0,0,30,0"
+                       Padding="0"
+                           Style="{StaticResource mainTextStyle}"/>
+                </StackLayout>
+            </Frame>
+            <StackLayout Orientation="Vertical" Grid.Row="1" Margin="20,0,20,0">
+                <StackLayout x:Name="brandEdit" IsVisible="False" Spacing="2">
+                    <Label Text="Марка"
+                           Margin="5,5,0,0"
+                       Style="{DynamicResource infoFieldStyle}"/>
+                  
+                        <Picker  x:Name="brandPicker"
+                                 TextColor="Black"
+                                     HorizontalOptions="FillAndExpand"
+                                 ItemDisplayBinding="{Binding Name}"
+                                 Title="Выберите марку авто"/>
+               
+                    <Label x:Name="brandWarning" Text="Марка не выбрана" Style="{StaticResource warningStyle}"/>
+                </StackLayout>
+                <Entry x:Name="fieldEntry" TextChanged="fieldEntry_TextChanged" Margin="0,10,0,0" Style="{StaticResource entryBaseStyle}">
+                    
+                </Entry>
+                <Label x:Name="labelWarning" Text="Заполните поле" Style="{StaticResource warningStyle}"/>
+                <Frame x:Name="Save"
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Start"
+                    Margin="0,20,0,100">
+                    <Label Text="Сохранить" Style="{StaticResource buttonTextStyle}"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="GoSave_Tapped"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </StackLayout>
+           
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

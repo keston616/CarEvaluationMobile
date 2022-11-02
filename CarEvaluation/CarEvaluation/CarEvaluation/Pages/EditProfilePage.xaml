@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CarEvaluation"
+             x:Class="CarEvaluation.EditProfilePage">
+    <ContentPage.Resources>
+        <local:IconPersonConverter x:Key="IconPersonConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView Orientation="Vertical"> 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" Padding="0">
+                <StackLayout VerticalOptions="Center"
+                             HorizontalOptions="FillAndExpand"
+                             Orientation="Horizontal">
+                        <Frame Padding="0" HasShadow="False">
+                            <Path Style="{StaticResource nextIconStyle}" 
+                          HorizontalOptions="Start"
+                          Margin="20,0,0,0"
+                                   WidthRequest="20"
+                          Rotation="180"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Label Text="Редактирование профиля" 
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="18"
+                          Margin="0,0,30,0"
+                       Padding="0"
+                           Style="{StaticResource mainTextStyle}"/>
+                </StackLayout>
+            </Frame>
+            <StackLayout Grid.Row="1" Margin="20,30,20,0" Spacing="10">
+                <Grid HorizontalOptions="Center">
+                      
+                        <Frame CornerRadius="50"
+                       VerticalOptions="Start" 
+                           HorizontalOptions="Center"
+                       Padding="0" 
+                           HeightRequest="100" 
+                           WidthRequest="100">
+                            <Image x:Name="personIcon" Source="{Binding Photo, Converter={StaticResource IconPersonConverter}}" HeightRequest="90" WidthRequest="90"/>
+                    </Frame>
+                        <Frame x:Name="delFrame"
+                            HeightRequest="30"
+                                               WidthRequest="30"
+                               
+                                               Margin="0,0,70,0"
+                                               CornerRadius="50"
+                                               Padding="0"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Start"
+                                               BackgroundColor="Gray">
+                            <Image Source="close.png"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="DeletedImage_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame BackgroundColor="Gray"
+                           HeightRequest="30" 
+                           CornerRadius="50"
+                           Padding="0"
+                           WidthRequest="30" 
+                           Margin="70,0,0,0"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Center">
+                        <Path Fill="White"
+                              VerticalOptions="Center"
+                              HorizontalOptions="Center"
+                              Margin="0,0,1,1"
+                              Data="M17.5 15.8333V4.16667C17.5 3.25 16.75 2.5 15.8333 2.5H4.16667C3.25 2.5 2.5 3.25 2.5 4.16667V15.8333C2.5 16.75 3.25 17.5 4.16667 17.5H15.8333C16.75 17.5 17.5 16.75 17.5 15.8333ZM7.08333 11.25L9.16667 13.7583L12.0833 10L15.8333 15H4.16667L7.08333 11.25Z"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoInsertPhoto_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                </Grid>
+
+                <StackLayout Margin="0,20,0,0" Spacing="2">
+                    <Label Text="Фамилия"
+                           FontSize="16"
+                           Margin="10,5,0,0"/>
+                    <Entry x:Name="surnameEntry"
+                           TextColor="Black"
+                           TextChanged="surnameEntry_TextChanged"
+                           Margin="6,0,6,0"/>
+                        <Label x:Name="surnameWarning" Text="Заполните поле" Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                <StackLayout  Spacing="2">
+                    <Label Text="Имя"
+                           Margin="10,5,0,0"
+                       FontSize="16"/>
+                    <Entry x:Name="nameEntry"
+                       TextColor="Black"
+                           TextChanged="nameEntry_TextChanged"
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="nameWarning" Text="Заполните поле" Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                <StackLayout  Spacing="2">
+                    <Label Text="Отчество"
+                       Margin="10,5,0,0"
+                       FontSize="16"/>
+                    <Entry x:Name="middleNameEntry"
+                       TextColor="Black"
+                           TextChanged="middleNameEntry_TextChanged"
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="middleNameWarning" Text="Заполните поле" Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                <StackLayout  Spacing="2">
+                    <Label Text="Номер телефона"
+                       Margin="10,5,0,0"
+                       FontSize="16"/>
+                    <Entry x:Name="phoneEntry"
+                       TextColor="Black"
+                           Keyboard="Telephone"
+                           MaxLength="12"
+                           TextChanged="phoneEntry_TextChanged" 
+                       Margin="6,0,6,0"/>
+                        <Label x:Name="phoneWarning" Text="Заполните поле" Style="{StaticResource warningStyle}"/>
+                    </StackLayout>
+                <Frame x:Name="Save"
+                    Style="{StaticResource buttonBaseStyle}"
+                    HorizontalOptions="FillAndExpand"
+                    HeightRequest="50"
+                       Padding="0"
+                    Margin="0,20,0,0">
+                    <Label Text="Сохранить" Style="{StaticResource buttonTextStyle}"/>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GoSave_Tapped"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+            </StackLayout>
+        </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
